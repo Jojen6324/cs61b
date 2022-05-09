@@ -95,10 +95,23 @@ public class ArrayDeque<T> {
 
     /** Remove item on the end of the Deque */
     public T removeLast() {
+        if (size() == 0) {
+            return null;
+        }
         if (prevsize + nextsize < a.length * 0.25 && a.length > 16) {
             desize();
         }
-        T ret = a[nextsize - 1];
+        T ret;
+        if (nextsize == 0) {
+            ret = a[a.length - 1];
+            a[a.length - 1] = null;
+            T[] temp = (T[]) new Object[a.length];
+            System.arraycopy(a, a.length - prevsize, temp, a.length - prevsize + 1, prevsize - 1);
+            a = temp;
+            prevsize -= 1;
+            return ret;
+        }
+        ret = a[nextsize - 1];
         a[nextsize - 1] = null;
         nextsize -= 1;
         return ret;
