@@ -95,7 +95,7 @@ public class ArrayDeque<T> {
 
     /** Remove item on the end of the Deque */
     public T removeLast() {
-        if (size() == 0) {
+        if (nextsize + prevsize == 0) {
             return null;
         }
         if (prevsize + nextsize < a.length * 0.25 && a.length > 16) {
@@ -122,7 +122,7 @@ public class ArrayDeque<T> {
         if (index >= prevsize) {
             return a[index - prevsize];
         }
-        return a[a.length - prevsize - 1 + index];
+        return a[a.length - prevsize + index];
     }
 }
 

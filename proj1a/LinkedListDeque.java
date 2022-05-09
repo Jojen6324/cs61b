@@ -36,12 +36,6 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T item) {
-        sentinel = new Intnode();
-        sentinel.next = new Intnode(sentinel, item, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
 
     public void addFirst(T item) {
         if (sentinel.next == null) {
