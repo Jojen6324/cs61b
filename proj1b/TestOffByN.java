@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 public class TestOffByN {
 
     @Test
-    public void TestCharEqual() {
+    public void testCharEqual() {
         CharacterComparator offByN = new OffByN(5);
 
         assertTrue(offByN.equalChars('a', 'f'));

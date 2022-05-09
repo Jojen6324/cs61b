@@ -32,5 +32,5 @@ public class TestPalindrome {
 
         String w5 = "noon";
         assertTrue(palindrome.isPalindrome(w5));
-     }
+    }
 }

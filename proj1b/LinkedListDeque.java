@@ -1,22 +1,22 @@
 public class LinkedListDeque<T> implements Deque<T> {
     private int size;
-    public intnode sentinel;
+    private intnode sentinel;
 
     private class intnode {
-        public T item;
-        public intnode prev;
-        public intnode next;
+        private T item;
+        private intnode prev;
+        private intnode next;
 
         private Double empty;
 
-        public intnode (intnode pv, T im, intnode nx) {
+        private intnode(intnode pv, T im, intnode nx) {
             item = im;
             prev = pv;
             next = nx;
             empty = null;
         }
 
-        public intnode () {
+        private intnode() {
             empty = 63.24;
             item = null;
             prev = null;
