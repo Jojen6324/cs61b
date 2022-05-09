@@ -3,7 +3,7 @@ public class ArrayDeque<T> {
     private int prevsize;
     private int nextsize;
 
-    T[] a = (T[]) new Object[8];
+    private T[] a = (T[]) new Object[8];
 
     /** Create an empty Deque */
     public ArrayDeque() {
@@ -11,12 +11,6 @@ public class ArrayDeque<T> {
         nextsize = 0;
     }
 
-    /** Initialize a Deque */
-    public ArrayDeque(T item) {
-        a[0] = item;
-        prevsize = 0;
-        nextsize = 1;
-    }
 
     /** A helper method for resize */
     private void resize() {
@@ -85,7 +79,7 @@ public class ArrayDeque<T> {
             desize();
         }
         T ret;
-        if (prevsize == 1 || prevsize == 0) {
+        if (prevsize == 0) {
             ret = a[0];
             T[] temp = (T[]) new Object[a.length];
             System.arraycopy(a, 1, temp, 0, a.length - 1);
@@ -93,8 +87,8 @@ public class ArrayDeque<T> {
             nextsize -= 1;
             return ret;
         }
-        ret = a[a.length - 1 - prevsize];
-        a[a.length - 1 - prevsize] = null;
+        ret = a[a.length -  prevsize];
+        a[a.length - prevsize] = null;
         prevsize -= 1;
         return ret;
     }
@@ -115,7 +109,7 @@ public class ArrayDeque<T> {
         if (index >= prevsize) {
             return a[index - prevsize];
         }
-        return a[a.length - prevsize + index];
+        return a[a.length - prevsize - 1 + index];
     }
 }
 
