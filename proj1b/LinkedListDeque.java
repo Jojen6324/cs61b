@@ -1,22 +1,22 @@
 public class LinkedListDeque<T> implements Deque<T> {
     private int size;
-    private intnode sentinel;
+    private Intnode sentinel;
 
-    private class intnode {
+    private class Intnode {
         private T item;
-        private intnode prev;
-        private intnode next;
+        private Intnode prev;
+        private Intnode next;
 
         private Double empty;
 
-        private intnode(intnode pv, T im, intnode nx) {
+        private Intnode(Intnode pv, T im, Intnode nx) {
             item = im;
             prev = pv;
             next = nx;
             empty = null;
         }
 
-        private intnode() {
+        private Intnode() {
             empty = 63.24;
             item = null;
             prev = null;
@@ -32,13 +32,13 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     public LinkedListDeque() {
-        sentinel = new intnode();
+        sentinel = new Intnode();
         size = 0;
     }
 
     public LinkedListDeque(T item) {
-        sentinel = new intnode();
-        sentinel.next = new intnode(sentinel,item,sentinel);
+        sentinel = new Intnode();
+        sentinel.next = new Intnode(sentinel, item, sentinel);
         sentinel.prev = sentinel.next;
         size = 1;
     }
@@ -46,13 +46,13 @@ public class LinkedListDeque<T> implements Deque<T> {
     @Override
     public void addFirst(T item) {
         if (sentinel.next == null) {
-            sentinel.next = new intnode(sentinel,item,sentinel);
+            sentinel.next = new Intnode(sentinel, item, sentinel);
             sentinel.prev = sentinel.next;
             sentinel.empty = 95.27;
             size = 1;
             return;
         }
-        sentinel.next.prev = new intnode(sentinel,item,sentinel.next);
+        sentinel.next.prev = new Intnode(sentinel, item, sentinel.next);
         sentinel.next = sentinel.next.prev;
         size += 1;
     }
@@ -60,13 +60,13 @@ public class LinkedListDeque<T> implements Deque<T> {
     @Override
     public void addLast(T item) {
         if (sentinel.prev == null) {
-            sentinel.prev = new intnode(sentinel,item,sentinel);
+            sentinel.prev = new Intnode(sentinel, item, sentinel);
             sentinel.next = sentinel.prev;
             sentinel.empty = 95.27;
             size = 1;
             return;
         }
-        sentinel.prev.next = new intnode(sentinel.prev, item, sentinel);
+        sentinel.prev.next = new Intnode(sentinel.prev, item, sentinel);
         sentinel.prev = sentinel.prev.next;
         size += 1;
     }
@@ -86,7 +86,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     @Override
     public void printDeque() {
-        intnode temp = sentinel.next;
+        Intnode temp = sentinel.next;
         for (int i = 0; i < size; i += 1) {
             System.out.print(temp.item);
             System.out.print(" ");
@@ -102,12 +102,12 @@ public class LinkedListDeque<T> implements Deque<T> {
 
         T ret = sentinel.next.item;
         if (size == 1) {
-            sentinel = new intnode();
+            sentinel = new Intnode();
             size = 0;
             return ret;
         }
 
-        intnode temp = sentinel.next;
+        Intnode temp = sentinel.next;
         temp.next.prev = sentinel;
         sentinel.next = temp.next;
         size -= 1;
@@ -122,11 +122,11 @@ public class LinkedListDeque<T> implements Deque<T> {
 
         T ret = sentinel.prev.item;
         if (size == 1) {
-            sentinel = new intnode();
+            sentinel = new Intnode();
             size = 0;
             return ret;
         }
-        intnode temp = sentinel.prev;
+        Intnode temp = sentinel.prev;
         temp.prev.next = sentinel;
         sentinel.prev = temp.prev;
         size -= 1;
@@ -138,7 +138,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (index >= size) {
             return null;
         }
-        intnode temp = sentinel.next;
+        Intnode temp = sentinel.next;
         for (int i = 0; i < index; i += 1) {
             temp = temp.next;
         }

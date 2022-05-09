@@ -1,5 +1,5 @@
 /** Create a Deque using array as core data data structure */
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private int prevsize;
     private int nextsize;
 

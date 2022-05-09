@@ -10,13 +10,12 @@ public class Palindrome {
     private boolean helper(Deque ls) {
         if (ls.size() == 0 || ls.size() == 1) {
             return true;
-        }
-        if (ls.removeFirst().equals(ls.removeLast()) && helper(ls)) {
+        } else if (ls.removeFirst().equals(ls.removeLast()) && helper(ls)) {
             return true;
         }
-         else {
-            return false;
-        }
+        return false;
+
+
     }
 
     public boolean isPalindrome(String word) {
@@ -25,7 +24,7 @@ public class Palindrome {
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
         int j = word.length() - 1;
-        for (int i = 0; i < word.length(); i++, j-- ) {
+        for (int i = 0; i < word.length(); i++, j--) {
             if (i == j) {
                 continue;
             }
