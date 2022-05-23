@@ -12,6 +12,9 @@ public class Percolation {
 
     private int openSize;
     public Percolation(int N) {
+        if (N <= 0) {
+            throw new IllegalArgumentException();
+        }
         world = new int[N][N];
         union = new WeightedQuickUnionUF(N * N + 2);
         openSize = 0;
@@ -31,7 +34,8 @@ public class Percolation {
         }
         if (row == 0) {
             union.union(top, xyToInt(row, col));
-        } else if (row == world.length - 1 && !percolates()) {
+        }
+        if (row == world.length - 1 && (!percolates() || isFull(row, col))) {
             union.union(bottom, xyToInt(row, col));
         }
         world[row][col] = 1;
@@ -80,10 +84,8 @@ public class Percolation {
     }  // does the system percolate?
 
     public static void main(String[] args) {
-        Percolation p = new Percolation(10);
+        Percolation p = new Percolation(1);
 
-        for (int i = 0; i < 10; i += 1) {
-            p.open(i, 4);
-        }
+        p.open(0, 0);
     }  // use for unit testing (not required)
 }
