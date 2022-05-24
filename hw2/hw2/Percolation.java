@@ -35,9 +35,6 @@ public class Percolation {
         if (row == 0) {
             union.union(top, xyToInt(row, col));
         }
-        if (row == world.length - 1 && (!percolates() || isFull(row, col))) {
-            union.union(bottom, xyToInt(row, col));
-        }
         world[row][col] = 1;
         unionAround(row, col, row - 1, col);
         unionAround(row, col, row + 1, col);
@@ -51,6 +48,9 @@ public class Percolation {
         try {
             if (world[row1][col1] == 1) {
                 union.union(xyToInt(row, col), xyToInt(row1, col1));
+                if (isFull(world.length - 1, col)) {
+                    union.union(bottom, xyToInt(world.length - 1, col));
+                }
             }
         } catch (IndexOutOfBoundsException e) {
             return;
@@ -67,11 +67,11 @@ public class Percolation {
     }
     public boolean isFull(int row, int col) {
         occur(row, col);
-        return union.connected(xyToInt(row, col), top);
+        return union.connected(top, xyToInt(row, col));
     } // is the site (row, col) full?
     public int numberOfOpenSites() {
         return openSize;
-    }           // number of open sites
+    }     // number of open sites
 
     private void occur(int row, int col) {
         if (row < 0 || col < 0 || row >= world.length || col >= world.length) {
@@ -84,8 +84,13 @@ public class Percolation {
     }  // does the system percolate?
 
     public static void main(String[] args) {
-        Percolation p = new Percolation(1);
+        Percolation p = new Percolation(3);
 
         p.open(0, 0);
+        p.open(1, 0);
+        p.open(2, 0);
+
+        //System.out.println(p.isFull(2, 0));
+        //System.out.println(p.percolates());
     }  // use for unit testing (not required)
 }
