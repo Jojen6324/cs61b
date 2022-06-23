@@ -1,7 +1,7 @@
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.LinkedList;
 
 /**
  * This class provides a shortestPath method for finding routes between two points
@@ -12,6 +12,30 @@ import java.util.regex.Pattern;
  * down to the priority you use to order your vertices.
  */
 public class Router {
+
+    static class PriorityNode implements Comparator<Long>{
+        GraphDB g;
+
+        long s;
+
+        long t;
+
+        PriorityNode(GraphDB g, long s, long t) {
+            this.g = g;
+            this.s = s;
+            this.t = t;
+        }
+
+        @Override
+        public int compare(Long a, Long b) {
+            double a1 = g.disTo.get(a);
+            double b1 = g.disTo.get(b);
+           double dis1 = a1 + g.distance(a, t);
+           double dis2 = b1 + g.distance(b, t);
+           return Double.compare(dis1, dis2);
+        }
+    }
+
     /**
      * Return a List of longs representing the shortest path from the node
      * closest to a start location and the node closest to the destination
@@ -25,7 +49,48 @@ public class Router {
      */
     public static List<Long> shortestPath(GraphDB g, double stlon, double stlat,
                                           double destlon, double destlat) {
-        return null; // FIXME
+        long s = g.closest(stlon, stlat);
+        long t = g.closest(destlon, destlat);
+        Queue<Long> queue = new PriorityQueue<>(new PriorityNode(g, s, t));
+        HashSet<Long> marked = new HashSet<>();
+        g.disTo.put(s, 0.0);
+        HashMap<Long, Long> edgeTo = new HashMap<>();
+        queue.add(s);
+        marked.add(s);
+        while (!queue.isEmpty()) {
+            long v = queue.remove();
+            for (long w : g.adjacent(v)) {
+                if (marked.contains(w)) {
+                    continue;
+                }
+                double dis = g.distance(v, w);
+                if (dis + g.disTo.get(v) < g.disTo.get(w)) {
+                    g.disTo.put(w, dis + g.disTo.get(v));
+                    edgeTo.put(w, v);
+                    queue.remove(w);
+                }
+                queue.add(w);
+            }
+            marked.add(v);
+            if (marked.containsAll(g.nodes.get(t).neighbor) && edgeTo.containsKey(t)) {
+                break;
+            }
+        }
+
+        /* clean */
+        for (long v : marked) {
+            g.disTo.put(v, Double.MAX_VALUE);
+        }
+
+        LinkedList<Long> ret = new LinkedList<>();
+        ret.add(t);
+        long v = edgeTo.get(t);
+        while (v != s) {
+            ret.addFirst(v);
+            v = edgeTo.get(v);
+        }
+        ret.addFirst(s);
+        return ret;
     }
 
     /**
