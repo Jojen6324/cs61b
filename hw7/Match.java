@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 public class Match {
     private BitSequence sequence;
     private Character symbol;
